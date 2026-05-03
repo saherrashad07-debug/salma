@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 22nd Birthday! 🎂</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Poppins',sans-serif;background:#0a0a0a;min-height:100vh;overflow:hidden;cursor:default}
+
+        .bg-fx{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 30% 20%,rgba(244,114,182,0.08),transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(239,68,68,0.06),transparent 50%)}
+        .bg-star{position:fixed;width:2px;height:2px;background:#fff;border-radius:50%;animation:twk 3s ease-in-out infinite;pointer-events:none;z-index:1}
+        @keyframes twk{0%,100%{opacity:0}50%{opacity:.5}}
+        .bg-heart{position:fixed;animation:bhf linear infinite;opacity:0;z-index:1;pointer-events:none;font-size:18px}
+        @keyframes bhf{0%{transform:translateY(100vh) rotate(0);opacity:0}10%{opacity:.6}90%{opacity:.15}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}
+        .bg-conf{position:fixed;pointer-events:none;z-index:2;animation:bcf linear infinite}
+        @keyframes bcf{0%{transform:translateY(-5vh) rotate(0);opacity:.8}100%{transform:translateY(105vh) rotate(720deg);opacity:0}}
+
+        /* ===== CURSOR SPARKLE TRAIL ===== */
+        .cursor-sparkle{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;animation:cursorFade .6s ease-out forwards}
+        @keyframes cursorFade{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(0) translateY(-20px)}}
+
+        /* ===== CLICK HEARTS ===== */
+        .click-heart{position:fixed;pointer-events:none;z-index:9998;font-size:20px;animation:clickPop .8s ease-out forwards}
+        @keyframes clickPop{0%{opacity:1;transform:translate(0,0) scale(0)}30%{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1.2)}100%{opacity:0;transform:translate(calc(var(--tx)*1.5),calc(var(--ty)*1.5 - 30px)) scale(.5)}}
+
+        .slide{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(80px) scale(.96);transition:all 1s cubic-bezier(.16,1,.3,1);pointer-events:none}
+        .slide.active{opacity:1;transform:translateX(0) scale(1);pointer-events:auto}
+        .slide.exit-left{opacity:0;transform:translateX(-80px) scale(.96);pointer-events:none}
+
+        /* ===== ANIMATED GLOW BORDER ===== */
+        .glow-card{position:relative;border-radius:1.5rem}
+        .glow-card::before{content:'';position:absolute;inset:-2px;border-radius:1.6rem;padding:2px;background:conic-gradient(from var(--glow-angle,0deg),#f472b6,#a855f7,#60a5fa,#fbbf24,#34d399,#f472b6);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .8s ease;animation:glowSpin 4s linear infinite;pointer-events:none}
+        .glow-card.show-glow::before{opacity:1}
+        @keyframes glowSpin{to{--glow-angle:360deg}}
+        @property --glow-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+
+        .cover-card{background:linear-gradient(135deg,#fce7f3,#fbcfe8,#f9a8d4);border-radius:1.5rem;width:min(420px,90vw);height:min(560px,82vh);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 25px 60px rgba(236,72,153,0.2),0 0 0 1px rgba(236,72,153,0.15)}
+        .cover-pattern{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ec4899' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+        .cover-border{position:absolute;inset:10px;border:2px solid rgba(236,72,153,0.2);border-radius:1rem;pointer-events:none}
+
+        .c-balloon{position:absolute;animation:cbl 4s ease-in-out infinite;font-size:2rem;opacity:.7;z-index:2}
+        @keyframes cbl{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-15px) rotate(3deg)}}
+        .c-sparkle{position:absolute;width:6px;height:6px;border-radius:50%;animation:csp 2s ease-in-out infinite;pointer-events:none;z-index:2}
+        @keyframes csp{0%,100%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1)}}
+        .c-heart{position:absolute;animation:chf 3s ease-in-out infinite;pointer-events:none;font-size:1.2rem;opacity:.5;z-index:2}
+        @keyframes chf{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px) rotate(10deg)}}
+
+        /* ===== SHIMMER TEXT ===== */
+        .shimmer{background:linear-gradient(90deg,#9f1239 0%,#f472b6 25%,#fff 50%,#f472b6 75%,#9f1239 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite}
+        @keyframes shimmer{to{background-position:200% center}}
+
+        .num22{font-family:'Playfair Display',serif;font-size:clamp(5rem,18vw,9rem);font-weight:900;line-height:1;background:linear-gradient(135deg,#ec4899,#be185d,#9f1239);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 4px 8px rgba(236,72,153,0.3));opacity:0;animation:npop 1s cubic-bezier(.34,1.56,.64,1) .3s forwards}
+        @keyframes npop{0%{opacity:0;transform:scale(0) rotate(-15deg)}60%{opacity:1;transform:scale(1.1) rotate(3deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+        .hb-text{font-family:'Great Vibes',cursive;font-size:clamp(2rem,7vw,3.5rem);opacity:0;animation:fsu .8s ease .8s forwards}
+        @keyframes fsu{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+        .cake-e{font-size:3rem;opacity:0;animation:cke 2s ease-in-out .6s infinite,fsu .6s ease .6s forwards}
+        @keyframes cke{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+        .pink-card{background:linear-gradient(160deg,#fce7f3,#fbcfe8,#f9a8d4);border-radius:1.5rem;width:min(420px,90vw);height:min(560px,82vh);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 25px 60px rgba(236,72,153,0.2),0 0 0 1px rgba(236,72,153,0.15)}
+        .red-card{background:linear-gradient(160deg,#fef2f2,#fecaca,#fca5a5);border-radius:1.5rem;width:min(420px,90vw);height:min(560px,82vh);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 25px 60px rgba(239,68,68,0.2),0 0 0 1px rgba(239,68,68,0.15)}
+        .dark-card{background:linear-gradient(160deg,#1a0a10,#2d1020,#1a0a10);border-radius:1.5rem;width:min(420px,90vw);height:min(560px,82vh);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(244,114,182,0.15)}
+
+        /* ===== 3D PHOTO TILT ===== */
+        .pframe{border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.18);border:3px solid rgba(255,255,255,0.75);opacity:0;transform:translateY(30px) scale(.9);transition:all .8s cubic-bezier(.16,1,.3,1);transition-property:opacity,transform,box-shadow;cursor:pointer;transform-style:preserve-3d;perspective:600px}
+        .pframe.show{opacity:1;transform:translateY(0) scale(1)}
+        .pframe:hover{box-shadow:0 15px 35px rgba(244,114,182,0.3);z-index:5}
+        .pframe img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+        .pframe:hover img{transform:scale(1.08)}
+
+        .sticky{background:#fffde7;border-radius:3px;box-shadow:3px 3px 12px rgba(0,0,0,0.15);position:relative;transform:rotate(-1deg);opacity:0;transition:all 1s cubic-bezier(.16,1,.3,1)}
+        .sticky.show{opacity:1}
+        .sticky::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.4),transparent 50%);pointer-events:none;border-radius:3px}
+        .stape{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:70px;height:22px;background:rgba(255,255,255,0.45);border:1px solid rgba(255,255,255,0.2);border-radius:2px}
+        .twcur{display:inline-block;width:2px;height:1.1em;background:#92400e;vertical-align:middle;margin-right:1px;animation:tbl .7s step-end infinite}
+        @keyframes tbl{0%,100%{opacity:1}50%{opacity:0}}
+
+        .nav-btn{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:50;padding:.65rem 2rem;border-radius:2rem;font-family:'Poppins',sans-serif;font-weight:600;font-size:.8rem;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;transition:all .3s ease;border:none;box-shadow:0 4px 15px rgba(0,0,0,0.2)}
+        .nav-btn:hover{transform:translateX(-50%) translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+        .nav-btn:active{transform:translateX(-50%) scale(.95)}
+        .nb-pink{background:linear-gradient(135deg,#ec4899,#db2777);color:#fff}
+        .nb-red{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+
+        .fi{opacity:0;transform:translateY(20px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+        .fi.show{opacity:1;transform:translateY(0)}
+
+        .fheart-beat{font-size:4rem;animation:fhb 1.2s ease-in-out infinite;display:inline-block}
+        @keyframes fhb{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.15)}60%{transform:scale(1)}}
+
+        .burst-c{position:fixed;pointer-events:none;z-index:1000;border-radius:2px}
+
+        .dots{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:8px}
+        .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);transition:all .4s ease}
+        .dot.active{background:#f472b6;transform:scale(1.3)}
+
+        /* ===== FINAL FIREWORKS ===== */
+        .firework{position:fixed;pointer-events:none;z-index:999}
+        .fw-particle{position:absolute;border-radius:50%;animation:fwExplode 1.2s ease-out forwards}
+        @keyframes fwExplode{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--fwx),var(--fwy)) scale(0)}}
+
+        .no-sb::-webkit-scrollbar{display:none}
+        .no-sb{-ms-overflow-style:none;scrollbar-width:none}
+    </style>
+</head>
+<body>
+
+<div class="bg-fx"></div>
+
+<div class="dots">
+    <div class="dot active" id="d0"></div>
+    <div class="dot" id="d1"></div>
+    <div class="dot" id="d2"></div>
+    <div class="dot" id="d3"></div>
+</div>
+
+<!-- COVER -->
+<div class="slide active" id="s0">
+    <div class="cover-card glow-card" id="gc0">
+        <div class="cover-pattern"></div>
+        <div class="cover-border"></div>
+        <div class="c-balloon" style="top:8%;left:12%">🎈</div>
+        <div class="c-balloon" style="top:5%;right:15%;animation-delay:.5s">🎈</div>
+        <div class="c-balloon" style="top:12%;left:45%;animation-delay:1s">🎈</div>
+        <div class="c-sparkle" style="top:15%;left:20%;background:#ec4899"></div>
+        <div class="c-sparkle" style="top:25%;right:18%;background:#f59e0b;animation-delay:.5s"></div>
+        <div class="c-sparkle" style="bottom:20%;left:15%;background:#a855f7;animation-delay:1s"></div>
+        <div class="c-sparkle" style="bottom:30%;right:20%;background:#ec4899;animation-delay:1.5s"></div>
+        <div class="c-heart" style="top:18%;right:10%;animation-delay:.3s">💕</div>
+        <div class="c-heart" style="bottom:22%;left:8%;animation-delay:.8s">💗</div>
+        <div class="c-heart" style="top:40%;left:5%;animation-delay:1.2s">💖</div>
+
+        <div class="cake-e" style="position:relative;z-index:5">🎂</div>
+        <div class="num22 mt-2" style="position:relative;z-index:5">22</div>
+        <div class="hb-text shimmer mt-1" style="position:relative;z-index:5">Happy Birthday!</div>
+        <p style="color:#9f1239;font-family:'Poppins',sans-serif;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;margin-top:1rem;opacity:0;animation:fsu .6s ease 1.3s forwards;position:relative;z-index:5">✦ A Special Day For A Special Person ✦</p>
+        <button class="nav-btn nb-pink" style="opacity:0;animation:fsu .6s ease 1.8s forwards" onclick="goNext(0)">Open →</button>
+    </div>
+</div>
+
+<!-- PHOTOS -->
+<div class="slide" id="s1">
+    <div class="pink-card glow-card" id="gc1">
+        <div class="c-sparkle" style="top:10%;left:10%;background:#ec4899"></div>
+        <div class="c-sparkle" style="top:8%;right:12%;background:#f59e0b;animation-delay:.7s"></div>
+        <div class="c-sparkle" style="bottom:15%;left:8%;background:#a855f7;animation-delay:1.2s"></div>
+        <div class="c-sparkle" style="bottom:10%;right:10%;background:#ec4899;animation-delay:.4s"></div>
+        <div class="c-heart" style="top:8%;right:8%;animation-delay:.2s">🌸</div>
+        <div class="c-heart" style="bottom:8%;left:8%;animation-delay:.9s">✨</div>
+
+        <h2 class="fi" id="t1" style="font-family:'Playfair Display',serif;font-size:clamp(1.3rem,4vw,1.8rem);font-weight:700;color:#831843;margin-bottom:1rem;position:relative;z-index:10">
+            You're <span style="font-family:'Great Vibes',cursive;font-size:clamp(2rem,7vw,3rem);color:#be185d">22!</span> 🎉
+        </h2>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;padding:0 1rem;position:relative;z-index:10">
+            <div class="pframe" id="f10" style="height:130px" onmousemove="tiltPhoto(event,this)" onmouseleave="resetTilt(this)"><img src="" alt=""></div>
+            <div class="pframe" id="f11" style="height:130px" onmousemove="tiltPhoto(event,this)" onmouseleave="resetTilt(this)"><img src="" alt=""></div>
+            <div class="pframe" id="f12" style="height:130px" onmousemove="tiltPhoto(event,this)" onmouseleave="resetTilt(this)"><img src="" alt=""></div>
+            <div class="pframe" id="f13" style="height:130px" onmousemove="tiltPhoto(event,this)" onmouseleave="resetTilt(this)"><img src="" alt=""></div>
+        </div>
+
+        <button class="nav-btn nb-pink" id="b1" style="opacity:0" onclick="goNext(1)">Next →</button>
+    </div>
+</div>
+
+<!-- MESSAGE -->
+<div class="slide" id="s2">
+    <div class="red-card glow-card" id="gc2">
+        <div class="c-sparkle" style="top:10%;left:15%;background:#ef4444"></div>
+        <div class="c-sparkle" style="bottom:15%;right:10%;background:#f59e0b;animation-delay:.8s"></div>
+        <div class="c-sparkle" style="top:50%;left:8%;background:#ec4899;animation-delay:.4s"></div>
+        <div class="c-sparkle" style="bottom:8%;left:50%;background:#f59e0b;animation-delay:1.2s"></div>
+        <div class="c-heart" style="top:6%;left:8%;animation-delay:.5s">❤️</div>
+        <div class="c-heart" style="top:6%;right:10%;animation-delay:.9s">💕</div>
+
+        <h2 class="fi" id="t2" style="font-family:'Great Vibes',cursive;font-size:clamp(2.5rem,9vw,4.5rem);color:#991b1b;margin-bottom:1.5rem;position:relative;z-index:10">To You!</h2>
+
+        <div class="sticky fi" id="stk" style="padding:1rem;width:calc(100% - 2rem);max-width:340px;z-index:10">
+            <div class="stape"></div>
+            <p id="smsg" style="font-family:'Tajawal',sans-serif;font-size:.92rem;line-height:1.9;color:#78350f;min-height:160px;margin-top:0.5rem"></p>
+            <span class="twcur" id="cur"></span>
+        </div>
+
+        <button class="nav-btn nb-red" id="b2" style="opacity:0" onclick="goNext(2)">Next →</button>
+    </div>
+</div>
+
+<!-- FINAL -->
+<div class="slide" id="s3">
+    <div class="dark-card glow-card" id="gc3">
+        <div class="c-sparkle" style="top:15%;left:20%;background:#f472b6"></div>
+        <div class="c-sparkle" style="top:20%;right:18%;background:#a855f7;animation-delay:.5s"></div>
+        <div class="c-sparkle" style="bottom:20%;left:25%;background:#fbbf24;animation-delay:1s"></div>
+        <div class="c-sparkle" style="bottom:25%;right:22%;background:#f472b6;animation-delay:1.5s"></div>
+        <div class="c-sparkle" style="top:50%;left:10%;background:#60a5fa;animation-delay:.8s"></div>
+        <div class="c-sparkle" style="top:45%;right:8%;background:#f472b6;animation-delay:1.2s"></div>
+
+        <div class="fi" id="fn0" style="transition-delay:0s"><span class="fheart-beat">💗</span></div>
+        <h2 class="fi" id="fn1" style="font-family:'Great Vibes',cursive;font-size:clamp(1.8rem,6vw,3rem);color:#f472b6;margin-top:1rem;transition-delay:.3s">Happy 22nd Birthday</h2>
+        <p class="fi" id="fn2" style="font-family:'Poppins',sans-serif;color:rgba(244,114,182,0.7);font-size:.85rem;margin-top:.5rem;transition-delay:.6s">Wishing you all the love & happiness ✨</p>
+        <div class="fi" id="fn3" style="display:flex;gap:8px;margin-top:1.5rem;transition-delay:.9s">
+            <span style="font-size:1.8rem">🎂</span><span style="font-size:1.8rem">🎁</span><span style="font-size:1.8rem">💕</span><span style="font-size:1.8rem">🎉</span><span style="font-size:1.8rem">🌸</span>
+        </div>
+        <p class="fi" id="fn4" style="font-family:'Poppins',sans-serif;color:rgba(244,114,182,0.35);font-size:.7rem;margin-top:2rem;transition-delay:1.2s">Made with 💗 just for you</p>
+    </div>
+</div>
+
+<script>
+// ===== IMAGES (original 4) =====
+const imgs=[
+    'https://z-cdn-media.chatglm.cn/files/6e20d4c7-c0be-4139-812d-eb454f41eee4.jpeg?auth_key=1877825279-86a3150be42f4664995fce7655b0ceee-0-c3586be39c5dd27ea73cfed6a32f93fb',
+    'https://z-cdn-media.chatglm.cn/files/71e59967-b659-4489-b74d-7554424ad39a.jpeg?auth_key=1877825279-0522b8a525d54e4da4a126660ef39252-0-960f093c9c110c7f22ca72ef76bcf57b',
+    'https://z-cdn-media.chatglm.cn/files/687d0483-e7fb-4479-8c9a-5e2daf30e4e4.jpeg?auth_key=1877825279-0ca31374ffc142aabd350c233805a692-0-9ef42e59a999bf5211cbf3eb10f3c7de',
+    'https://z-cdn-media.chatglm.cn/files/56188dfd-4e67-4e2a-9d04-7df21fb1c2e0.jpeg?auth_key=1877825279-9c067233e62542a9a94d3deacddf3a02-0-881f340d32cee3857c5b89ac438f3d82'
+];
+for(let i=0;i<4;i++){const el=document.getElementById('f1'+i);if(el)el.querySelector('img').src=imgs[i]}
+
+// ===== BACKGROUND =====
+(function(){
+    for(let i=0;i<40;i++){const s=document.createElement('div');s.className='bg-star';s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.animationDelay=Math.random()*5+'s';s.style.animationDuration=(2+Math.random()*3)+'s';document.body.appendChild(s)}
+    const hs=['💕','💗','💖','♥','🩷','🌸','✨'];
+    for(let i=0;i<16;i++){const e=document.createElement('div');e.className='bg-heart';e.textContent=hs[Math.floor(Math.random()*hs.length)];e.style.left=Math.random()*100+'vw';e.style.fontSize=(14+Math.random()*14)+'px';e.style.animationDuration=(6+Math.random()*8)+'s';e.style.animationDelay=Math.random()*10+'s';document.body.appendChild(e)}
+    const cs=['#f472b6','#a855f7','#60a5fa','#fbbf24','#34d399','#fb923c','#f87171','#e879f9'];
+    for(let i=0;i<30;i++){const e=document.createElement('div');e.className='bg-conf';e.style.width=(4+Math.random()*7)+'px';e.style.height=(4+Math.random()*7)+'px';e.style.background=cs[Math.floor(Math.random()*cs.length)];e.style.left=Math.random()*100+'vw';e.style.borderRadius=Math.random()>.5?'50%':'2px';e.style.animationDuration=(5+Math.random()*7)+'s';e.style.animationDelay=Math.random()*8+'s';document.body.appendChild(e)}
+})();
+
+// ===== CURSOR SPARKLE TRAIL =====
+let sparkleThrottle=0;
+document.addEventListener('mousemove',function(e){
+    if(Date.now()-sparkleThrottle<40) return;
+    sparkleThrottle=Date.now();
+    const s=document.createElement('div');
+    s.className='cursor-sparkle';
+    const colors=['#f472b6','#a855f7','#60a5fa','#fbbf24','#fff'];
+    const sz=3+Math.random()*5;
+    s.style.width=sz+'px';s.style.height=sz+'px';
+    s.style.background=colors[Math.floor(Math.random()*colors.length)];
+    s.style.left=(e.clientX-sz/2+Math.random()*10-5)+'px';
+    s.style.top=(e.clientY-sz/2+Math.random()*10-5)+'px';
+    s.style.boxShadow='0 0 6px '+s.style.background;
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),600);
+});
+
+// ===== CLICK ANYWHERE = HEARTS =====
+document.addEventListener('click',function(e){
+    const hearts=['💕','💗','💖','❤️','🩷','✨','🌸'];
+    for(let i=0;i<5;i++){
+        const h=document.createElement('div');
+        h.className='click-heart';
+        h.textContent=hearts[Math.floor(Math.random()*hearts.length)];
+        h.style.left=e.clientX+'px';
+        h.style.top=e.clientY+'px';
+        const angle=Math.random()*Math.PI*2;
+        const dist=30+Math.random()*50;
+        h.style.setProperty('--tx',Math.cos(angle)*dist+'px');
+        h.style.setProperty('--ty',Math.sin(angle)*dist+'px');
+        h.style.fontSize=(16+Math.random()*12)+'px';
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),800);
+    }
+});
+
+// ===== 3D PHOTO TILT =====
+function tiltPhoto(e,el){
+    const rect=el.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+    const cx=rect.width/2,cy=rect.height/2;
+    const rx=(y-cy)/cy*-12;
+    const ry=(x-cx)/cx*12;
+    el.style.transform='perspective(600px) rotateX('+rx+'deg) rotateY('+ry+'deg) scale(1.05)';
+}
+function resetTilt(el){
+    el.style.transform='perspective(600px) rotateX(0) rotateY(0) scale(1)';
+    el.style.transition='transform .4s ease';
+    setTimeout(()=>{el.style.transition=''},400);
+}
+
+// ===== CONFETTI BURST =====
+function burst(){
+    const cs=['#f472b6','#a855f7','#60a5fa','#fbbf24','#34d399','#fb923c','#f87171','#e879f9','#fff','#ec4899','#ef4444'];
+    for(let i=0;i<50;i++){const c=document.createElement('div');c.className='burst-c';const sz=5+Math.random()*10;c.style.width=sz+'px';c.style.height=sz*(0.4+Math.random()*0.6)+'px';c.style.background=cs[Math.floor(Math.random()*cs.length)];c.style.left=(30+Math.random()*40)+'vw';c.style.top=(30+Math.random()*20)+'vh';c.style.borderRadius=Math.random()>.5?'50%':'2px';document.body.appendChild(c);const a=Math.random()*Math.PI*2,v=150+Math.random()*300,tx=Math.cos(a)*v,ty=Math.sin(a)*v-200,r=Math.random()*1080-540;c.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:`translate(${tx}px,${ty+400}px) rotate(${r}deg)`,opacity:0}],{duration:1200+Math.random()*800,easing:'cubic-bezier(.25,.46,.45,.94)',fill:'forwards'});setTimeout(()=>c.remove(),2200)}
+}
+
+// ===== FIREWORKS ON FINAL PAGE =====
+function launchFirework(){
+    const x=15+Math.random()*70;
+    const y=10+Math.random()*40;
+    const fw=document.createElement('div');
+    fw.className='firework';
+    fw.style.left=x+'vw';fw.style.top=y+'vh';
+    const colors=['#f472b6','#a855f7','#60a5fa','#fbbf24','#34d399','#fb923c','#f87171','#e879f9','#fff'];
+    const col=colors[Math.floor(Math.random()*colors.length)];
+    for(let i=0;i<20;i++){
+        const p=document.createElement('div');
+        p.className='fw-particle';
+        const sz=3+Math.random()*4;
+        p.style.width=sz+'px';p.style.height=sz+'px';
+        p.style.background=col;
+        p.style.boxShadow='0 0 4px '+col;
+        const angle=Math.PI*2*i/20;
+        const dist=40+Math.random()*60;
+        p.style.setProperty('--fwx',Math.cos(angle)*dist+'px');
+        p.style.setProperty('--fwy',Math.sin(angle)*dist+'px');
+        p.style.animationDelay=(Math.random()*.15)+'s';
+        fw.appendChild(p);
+    }
+    document.body.appendChild(fw);
+    setTimeout(()=>fw.remove(),1500);
+}
+let fwInterval=null;
+function startFireworks(){
+    fwInterval=setInterval(launchFirework,600);
+    setTimeout(()=>{if(fwInterval)clearInterval(fwInterval);launchFirework()},5000);
+}
+
+// ===== NAVIGATION =====
+let typed=false;
+function goNext(from){
+    burst();
+    const old=document.getElementById('s'+from);
+    const nxt=document.getElementById('s'+(from+1));
+    old.classList.remove('active');old.classList.add('exit-left');
+    document.getElementById('d'+from).classList.remove('active');
+    document.getElementById('d'+(from+1)).classList.add('active');
+    setTimeout(()=>{nxt.classList.add('active');animateSlide(from+1)},200);
+    setTimeout(()=>{old.classList.remove('exit-left')},1200);
+}
+
+function show(id){const el=document.getElementById(id);if(el)el.classList.add('show')}
+
+function animateSlide(idx){
+    // Glow border
+    setTimeout(()=>{const gc=document.getElementById('gc'+idx);if(gc)gc.classList.add('show-glow')},300);
+
+    if(idx===1){
+        setTimeout(()=>show('t1'),100);
+        for(let i=0;i<4;i++) setTimeout(()=>show('f1'+i),300+i*200);
+        setTimeout(()=>{const b=document.getElementById('b1');b.style.opacity='1';b.style.animation='fsu .6s ease forwards'},1300);
+    }
+    if(idx===2){
+        setTimeout(()=>show('t2'),100);
+        setTimeout(()=>show('stk'),400);
+        setTimeout(()=>{if(!typed){typed=true;typewrite()}},900);
+        setTimeout(()=>{const b=document.getElementById('b2');b.style.opacity='1';b.style.animation='fsu .6s ease forwards'},7500);
+    }
+    if(idx===3){
+        for(let i=0;i<5;i++) setTimeout(()=>show('fn'+i),300+i*300);
+        setTimeout(()=>startFireworks(),600);
+    }
+}
+
+// ===== TYPEWRITER =====
+function typewrite(){
+    const text='كل سنه وانتي طيبه يا كوتوبوتو\nوعقبال مليون سنه\nيارب ما تبعدي عني ابدا\nانا لو اقعدت العمر كله مش هلاقي زيك\nوبجد انتي اغلى حد في حياتي\nو ان شاء الله ربنا يكرمنا\nو بعد كدا اقولك كل سنه وانتي طيبه\nو احنا في بيتنا يا عسليه....\nبحبك❤️❤️❤️😘😘';
+    const el=document.getElementById('smsg'),cur=document.getElementById('cur');
+    let i=0;
+    function go(){if(i<text.length){const ch=text.charAt(i);if(ch==='\n')el.innerHTML+='<br>';else el.innerHTML+=ch;i++;setTimeout(go,ch==='\n'?250:30+Math.random()*30)}else{setTimeout(()=>{cur.style.display='none'},2000)}}
+    go();
+}
+
+// Glow on cover from start
+setTimeout(()=>document.getElementById('gc0').classList.add('show-glow'),500);
+</script>
+</body>
+</html>
